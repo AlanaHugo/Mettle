@@ -1,0 +1,76 @@
+/* Montserrat is the primary font in varying sizes. 
+See branding guidelines: https://www.figma.com/design/ICjhs4YqcYRnoUkOGzkXcm/Mettle?node-id=0-1&t=SqSk5IG7uLNmLRi3-1 */
+.montserrat-regular {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Playfair used for the "Mettle"logo, some headings and article card titles. See branding guildelines above for more info  */
+.playfair-logo {
+  font-family: "Playfair", serif;
+  letter-spacing: -0.35em;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.AppBar,
+.ToolBar {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.MuiButton-root.Logo {
+  font-family: "Playfair", serif;
+  font-weight: 700;
+  font-size: 4em;
+  letter-spacing: -0.35rem;
+  color: #502419;
+}
+
+.MuiButton-root.Logo:hover {
+  background-color: white;
+}
+
+.MuiButton-root.Products,
+.MuiButton-root.Articles {
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  font-size: 0.75em;
+}
+
+.MuiButton-root:hover {
+  text-decoration: underline;
+  background-color: white;
+}
+
+.MuiButton-root.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.navButtons,
+.icons {
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons {
+  position: relative;
+}
+
+.navButtons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

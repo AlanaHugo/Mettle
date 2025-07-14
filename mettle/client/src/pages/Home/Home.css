@@ -1,0 +1,52 @@
+/* Flower animation */
+
+.flexBanner1 {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  color: black;
+  padding: 2rem;
+  background-image: url("/public/Images/daisies.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150%;
+  animation: zoomOut 20s linear forwards;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes zoomOut {
+  from {
+    background-size: 120%;
+  }
+  to {
+    background-size: 100%;
+  }
+}
+
+.textBlock1 {
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+  padding: 2rem;
+  text-align: center !important;
+  border-radius: 8px;
+  max-width: 90vw;
+  z-index: 2;
+  position: relative;
+  align-content: center !important; 
+  justify-content: center !important;
+}
+
+.buttonsDiv {
+  display: flex;
+  gap: 2rem;
+  justify-content: center; 
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.Banner2 {
+text-align: center;
+align-content: center;
+background-color: #7ea172;
+}
