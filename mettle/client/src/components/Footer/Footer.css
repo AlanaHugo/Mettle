@@ -65,3 +65,7 @@ font-family: "Playfair", serif;
 font-size: 1.5rem !important;
 color: #C7CB85;
 }
+
+footer {
+  padding: 0px 20px !important;
+}

@@ -1,0 +1,41 @@
+.articleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.articleDiv {
+    display:flex;
+    flex-direction: column;
+    text-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    padding: 20px;
+    
+}
+
+.articleHeader {
+    text-align: center;
+}
+
+.authDescr {
+    font-style: italic;
+}
+
+.SubContainer {
+    text-align: center;
+    align-content: center;
+    padding: 20px 20px 20px 0px;
+}
+
+.pageDiv {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+}
+.adDiv1, .adDiv2 {
+    background-color: #E7A977;
+    width: 30vw;
+}

@@ -6,7 +6,7 @@ import './index.css'; // global styles
 // Pages and components
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/Products/ProductDetail";
-import Articles from "./pages/Articles";
+import Articles from "./pages/Articles/Articles";
 import SubmitArticle from "./pages/SubmitArticle";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,7 +14,7 @@ import Cart from "./pages/Cart";
 import Home from "./pages/Home/Home";
 import Navbar from "./components/NavBar/Navbar";
 import Footer from "./components/Footer/Footer";
-import ArticleDetail from "./pages/ArticleDetail";
+import ArticleDetail from "./pages/Articles/ArticleDetail";
 import SearchResults from "./pages/SearchResults/SearchResultsPage";
 
 // 🔍 Import SearchProvider

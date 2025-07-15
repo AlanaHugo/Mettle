@@ -39,7 +39,8 @@ See branding guidelines: https://www.figma.com/design/ICjhs4YqcYRnoUkOGzkXcm/Met
 }
 
 .MuiButton-root.Products,
-.MuiButton-root.Articles {
+.MuiButton-root.Articles,
+.MuiButton-root.Submit {
   font-family: "Montserrat", sans-serif;
   color: black;
   font-size: 0.75em;

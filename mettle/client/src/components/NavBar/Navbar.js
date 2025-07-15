@@ -1,6 +1,11 @@
+// Core React and routing imports
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
+// Global context for managing search state
 import { SearchContext } from "../../context/SearchContext";
+
+// Material UI components for layout and interactivity
 import {
   AppBar,
   Toolbar,
@@ -10,12 +15,16 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { styled } from "@mui/system";
+
+// MUI icons used in the navbar
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+
+// Local styles
 import "./Navbar.css";
 
-// Styled Search Input
+// Styled MUI input for the search field with custom layout and transition
 const SearchInput = styled(InputBase)(({ theme }) => ({
   color: "#502419",
   border: "1px solid #ccc",
@@ -26,12 +35,13 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
   transition: "width 0.3s ease",
 }));
 
-// SearchBar component 
+// Component for toggling and executing search functionality
 const SearchBarToggle = () => {
-  const { setSearchQuery } = useContext(SearchContext);
-  const [input, setInput] = useState("");
-  const navigate = useNavigate();
+  const { setSearchQuery } = useContext(SearchContext); // Access context to set global search query
+  const [input, setInput] = useState(""); // Local state to track input value
+  const navigate = useNavigate(); // React Router hook for programmatic navigation
 
+  // Trigger search: updates global context and navigates to search results page
   const handleSearch = () => {
     if (input.trim()) {
       setSearchQuery(input.trim());
@@ -43,8 +53,8 @@ const SearchBarToggle = () => {
     <SearchInput
       placeholder="Search..."
       value={input}
-      onChange={(e) => setInput(e.target.value)}
-      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+      onChange={(e) => setInput(e.target.value)} // Update state on input change
+      onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Run search on Enter key
       autoFocus
       endAdornment={
         <InputAdornment position="end">
@@ -57,23 +67,26 @@ const SearchBarToggle = () => {
   );
 };
 
-// Main Navbar component
+// Main Navbar component: renders top navigation bar with routing, icons, and search
 const Navbar = ({ user }) => {
-  const [showSearch, setShowSearch] = useState(false);
-  const toggleSearch = () => setShowSearch((prev) => !prev);
-  const location = useLocation();
+  const [showSearch, setShowSearch] = useState(false); // Controls visibility of the search input
+  const toggleSearch = () => setShowSearch((prev) => !prev); // Toggles search input visibility
+  const location = useLocation(); // Provides current route info
 
+  // Returns true if the current route matches the given path
   const isActive = (path) => location.pathname === path;
 
   return (
     <AppBar className="AppBar" position="static">
       <Toolbar className="ToolBar">
+        {/* Site logo button that routes to the homepage */}
         <div className="logoDiv">
           <Button className="Logo" component={Link} to="/">
             Mettle
           </Button>
         </div>
 
+        {/* Main navigation links for product and article pages */}
         <div className="navButtons">
           <Button
             className={isActive("/products") ? "Products active" : "Products"}
@@ -91,6 +104,7 @@ const Navbar = ({ user }) => {
             Community
           </Button>
 
+          {/* Conditionally render Submit Article button if user is authenticated */}
           {user && (
             <Button
               className={isActive("/submit") ? "Submit active" : "Submit"}
@@ -102,7 +116,9 @@ const Navbar = ({ user }) => {
           )}
         </div>
 
+        {/* Icon section: includes search toggle, login, and cart buttons */}
         <div className="icons">
+          {/* Toggles the visibility of the search input */}
           <IconButton
             onClick={toggleSearch}
             style={{
@@ -116,8 +132,10 @@ const Navbar = ({ user }) => {
             <SearchIcon />
           </IconButton>
 
+          {/* Conditionally render search input when toggled on */}
           {showSearch && <SearchBarToggle />}
 
+          {/* Link to login/profile page */}
           <Button
             className={isActive("/login") ? "Login active" : "Login"}
             component={Link}
@@ -126,6 +144,7 @@ const Navbar = ({ user }) => {
             <PersonOutlineOutlinedIcon className="icon" />
           </Button>
 
+          {/* Link to shopping cart */}
           <Button
             className={isActive("/cart") ? "Cart active" : "Cart"}
             component={Link}
