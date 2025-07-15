@@ -1,7 +1,7 @@
 // Custom hook to fetch article ID
 
 import { useEffect, useState } from 'react';
-import { fetchArticleById } from '../controllers/articleController';
+import { fetchArticleById } from '../controllers/Articles/fetchArticlesController';
 
 export default function useFetchArticle(id) {
   const [article, setArticle] = useState(null);

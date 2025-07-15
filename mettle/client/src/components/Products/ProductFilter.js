@@ -1,63 +1,50 @@
+// ProductFilter.js
+
 import React from "react";
+import { CATEGORY_OPTIONS, SORT_OPTIONS } from "../../config/productFilters.js"; // External config arrays for sort and category options
+import { useProductFilterHandlers } from "../../hooks/useProductFilterHandlers"; // Custom hook for handling input changes
 
 /**
- * ProductFilter
- * --------------------------
- * Sidebar component that lets users:
- *  - Filter by 'featured' products
- *  - Filter by category (e.g., "Hospital Stay")
- *  - Sort products by price, name, or date
+ * ProductFilter Sidebar
+ * ---------------------
+ * Displays controls for sorting and filtering products:
+ * - Sort by price, name, or date
+ * - Filter by "Featured"
+ * - Filter by category (multi-select)
  *
  * Props:
- *  - filters: the current filters applied
- *  - onChange: function to update filters in parent component
+ * - filters: current filter state from parent component
+ * - onChange: callback to send updated filters to parent
  */
 export default function ProductFilter({ filters, onChange }) {
-  /**
-   * Updates the selected sort option (e.g., price, A-Z)
-   */
-  const handleSortChange = (e) => {
-    onChange({ ...filters, sortBy: e.target.value });
-  };
-
-  /**
-   * Updates the "Featured" checkbox
-   */
-  const handleFeaturedChange = (e) => {
-    onChange({ ...filters, featured: e.target.checked });
-  };
-
-  /**
-   * Adds/removes category selections (e.g., "Hospital Stay")
-   */
-  const handleCategoryChange = (e) => {
-    const value = e.target.value;
-    const isChecked = e.target.checked;
-
-    const currentCategories = filters.category || [];
-
-    const updatedCategories = isChecked
-      ? [...currentCategories, value] // add category
-      : currentCategories.filter((c) => c !== value); // remove category
-
-    onChange({ ...filters, category: updatedCategories });
-  };
+  // Custom hook that returns the handler functions for form changes
+  const {
+    handleSortChange,
+    handleFeaturedChange,
+    handleCategoryChange,
+  } = useProductFilterHandlers(filters, onChange);
 
   return (
     <aside className="sidebar">
-      {/* Sort dropdown */}
+      {/* Sort section */}
       <h3>Sort</h3>
       <div className="sortDropdown">
-      <select className="dropContent" value={filters.sortBy || ""} onChange={handleSortChange}>
-        <option value="">All</option>
-        <option value="price">Price (Low to High)</option>
-        <option value="alphabetical">A-Z</option>
-        <option value="oldest">Oldest to Newest</option>
-      </select>
+        <select
+          className="dropContent"
+          value={filters.sortBy || ""}
+          onChange={handleSortChange}
+        >
+          {/* Render options from config */}
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </div>
-      <h3>Filter</h3>
 
-      {/* Featured checkbox */}
+      {/* Featured filter */}
+      <h3>Filter</h3>
       <label>
         <input
           type="checkbox"
@@ -69,62 +56,22 @@ export default function ProductFilter({ filters, onChange }) {
 
       <hr />
 
-      {/* Category filter section */}
+      {/* Category filters */}
       <h4>Category</h4>
-      <label>
-        <input
-          type="checkbox"
-          value="Hospital Stay"
-          checked={filters.category?.includes("Hospital Stay")}
-          onChange={handleCategoryChange}
-        />
-        Hospital Stay
-      </label>
-      <hr />
-      <label>
-        <input
-          type="checkbox"
-          value="Recovery"
-          checked={filters.category?.includes("Recovery")}
-          onChange={handleCategoryChange}
-        />
-        Recovery
-      </label>
-
-      <hr />
-      <label>
-        <input
-          type="checkbox"
-          value="Surgery"
-          checked={filters.category?.includes("Surgery")}
-          onChange={handleCategoryChange}
-        />
-        Surgery
-      </label>
-
-      <hr />
-      <label>
-        <input
-          type="checkbox"
-          value="Comfort"
-          checked={filters.category?.includes("Comfort")}
-          onChange={handleCategoryChange}
-        />
-        Comfort
-      </label>
-
-      <hr />
-      <label>
-        <input
-          type="checkbox"
-          value="Wellness"
-          checked={filters.category?.includes("Wellness")}
-          onChange={handleCategoryChange}
-        />
-        Wellness
-      </label>
-
-      <hr />
+      {CATEGORY_OPTIONS.map((category) => (
+        <React.Fragment key={category}>
+          <label>
+            <input
+              type="checkbox"
+              value={category}
+              checked={filters.category?.includes(category)}
+              onChange={handleCategoryChange}
+            />
+            {category}
+          </label>
+          <hr />
+        </React.Fragment>
+      ))}
     </aside>
   );
 }
