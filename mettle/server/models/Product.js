@@ -9,4 +9,7 @@ const productSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// text index for search (on relevant fields)
+productSchema.index({ name: "text", description: "text", category: "text" });
+
 module.exports = mongoose.model('Product', productSchema);

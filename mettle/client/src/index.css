@@ -1,13 +1,55 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+
+:root {
+  --font-heading: "Montserrat", sans-serif;
+  --font-body: "Merriweather", serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #222;
+}
+
+h1,
+h4 {
+  font-family: var(--font-heading);
+}
+
+h3 {
+  font-family: "Playfair, serif";
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
+.buttonPrimary {
+  background-color: #c7cb85;
+  font-family: "Montserrat", sans-serif;
+  color: black;
+  font-size: 1rem;
+  padding: 12px, 24px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.buttonPrimary:hover {
+  background-color: #7ea172;
+}
+
+.buttonPrimary:active {
+  background-color: #7ea172;
+  border: #c7cb85;
+}
+
+select, option {
+  font-family: 'Montserrat', sans-serif;
 }
