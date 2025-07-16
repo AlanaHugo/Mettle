@@ -1,78 +1,75 @@
-// Login.jsx
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../../services/loginUser"; // API call for login
-import { useLoginForm } from "../../hooks/useLoginForm"; // Custom hook to handle form inputs
-import { FormContainer, SmallerInput } from "../../components/FormComponents"; // Styled reusable inputs
-import { PrimaryButton } from "../../components/Buttons"; // Styled button component
-import { useUser } from "../../context/userContext"; // Custom hook for auth context
-import "./Login.css"; // Local CSS styles
+import { useNavigate, useLocation, Link } from "react-router-dom";
+
+import { loginUser } from "../../services/loginUser"; // API service for login
+import { useLoginForm } from "../../hooks/useLoginForm"; // Custom hook for input state
+import { useUser } from "../../context/userContext"; // Access global user context
+import { FormContainer, SmallerInput } from "../../components/FormComponents"; // Reusable styled input components
+import { PrimaryButton } from "../../components/Buttons"; // Styled button
+
+import "./Login.css"; // Local styles
 
 /**
- * Login component
- * ----------------
- * Renders a login form, handles user input, submits login request,
- * stores auth token on success, updates global user context, and redirects.
+ * Login Component
+ * ------------------------
+ * Handles:
+ * - User input via custom hook
+ * - Form submission and authentication
+ * - Storing JWT token
+ * - Updating global user context
+ * - Redirecting on success
+ * - Displaying logout message if redirected from logout
  */
 const Login = () => {
-  // Destructure setUser from global UserContext (manages logged-in user state)
-  const { setUser } = useUser();
+  const { setUser } = useUser(); // Update global user context after login
+  const { form, handleChange } = useLoginForm(); // Handle form state
 
-  // Custom hook manages form state and change handlers
-  const { form, handleChange } = useLoginForm();
+  const navigate = useNavigate(); // Redirect on successful login
+  const location = useLocation(); // Access route state (e.g., logout message)
 
-  // React Router hook for navigation after successful login
-  const navigate = useNavigate();
+  const logoutMessage = location.state?.message; // Check for logout feedback
 
   /**
-   * Handles form submission for login.
-   * Prevents default page reload.
-   * Calls loginUser service to authenticate.
-   * On success, stores JWT token in localStorage, updates user context, and navigates home.
-   * On failure, displays error alert.
+   * Submit handler for login form
    */
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form reload
 
     try {
-      // Send credentials to backend login API
-      const data = await loginUser(form);
-      console.log("✅ Login API data:", data);
+      const data = await loginUser(form); // Call API with credentials
+      console.log("Login API data:", data);
 
-      // Check if response contains required token and user object
       if (!data.token || !data.user) {
         throw new Error("Incomplete login response from server");
       }
 
-      // Save JWT token to localStorage for persistence
-      localStorage.setItem("token", data.token);
-
-      // Update global user state to logged-in user data
-      setUser(data.user);
-
-      // Redirect user to homepage (or other protected page)
-      navigate("/");
+      localStorage.setItem("token", data.token); // Save token
+      setUser(data.user); // Update user context
+      navigate("/"); // Redirect to home
     } catch (err) {
-      // Log error to console for debugging
-      console.error("❌ Login error caught:", err);
-
-      // Show user-friendly error alert (backend message if available)
+      console.error("Login error caught:", err);
       alert(err.response?.data?.message || err.message || "Login error");
     }
   };
 
-  // Render login form UI
   return (
     <div className="formImage">
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <h2 className="formHeader">Login</h2>
+
+          {/* Optional logout confirmation message */}
+          {logoutMessage && (
+            <div className="logoutMessage">{logoutMessage}</div>
+          )}
+
           <p className="formBody">
             Login to your Mettle account to give your recommendations, <br />
             share your story or manage submissions you've made.
           </p>
+
+          {/* Email and password fields */}
           <div className="formFields">
-            {/* Email or username input */}
             <SmallerInput
               name="email"
               type="text"
@@ -81,7 +78,6 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            {/* Password input */}
             <SmallerInput
               name="password"
               type="password"
@@ -91,17 +87,20 @@ const Login = () => {
               required
             />
           </div>
+
+          {/* Submit button */}
           <div className="formButton">
-            {/* Submit button triggers form submit */}
             <PrimaryButton type="submit">Login</PrimaryButton>
           </div>
+
+          {/* Register link */}
           <p className="formBody">
-            Don't have a Mettle account yet? Register{" "}
+            Don't have a Mettle account yet? {" "}
             <Link
               to="/register"
               style={{ color: "#502419", textDecoration: "underline" }}
             >
-              here
+              Register now
             </Link>
             .
           </p>
