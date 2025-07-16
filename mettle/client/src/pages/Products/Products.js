@@ -6,11 +6,12 @@ import ProductFilter from "../../components/Products/ProductFilter";
 import ProductCard from "../../components/Products/ProductCard";
 
 // Import controller functions that fetch, filter, and sort products
+import { fetchProducts } from "../../controllers/Products/fetchProductsController";
+
 import {
-  fetchProducts,
-  filterProducts,
   sortProducts,
-} from "../../controllers/productController";
+  filterProducts,
+} from "../../controllers/Products/filterController";
 
 // Import component-specific styling
 import "./Products.css";
@@ -29,8 +30,8 @@ export default function Products() {
   // When the component first loads, fetch product data from backend
   useEffect(() => {
     fetchProducts()
-      .then(setProducts)      // Save fetched products to state
-      .catch(console.error);  // Log errors if the request fails
+      .then(setProducts) // Save fetched products to state
+      .catch(console.error); // Log errors if the request fails
   }, []);
 
   // Filter the list of products based on selected filters

@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home/Home";
-import Navbar from "./components/NavBar/Navbar";
+import NavBar from "./components/NavBar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ArticleDetail from "./pages/Articles/ArticleDetail";
 import SearchResults from "./pages/SearchResults/SearchResultsPage";
@@ -46,7 +46,7 @@ function App() {
   return (
     <SearchProvider>
       <Router>
-        <Navbar user={user} />
+        <NavBar user={user} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
