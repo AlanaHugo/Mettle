@@ -1,6 +1,8 @@
 // Core React and routing imports
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useUser } from "../../context/userContext"; //
+import { SearchProvider } from "../../context/SearchContext";
 
 // Global context for managing search state
 import { SearchContext } from "../../context/SearchContext";
@@ -37,7 +39,7 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
 
 // Component for toggling and executing search functionality
 const SearchBarToggle = () => {
-  const { setSearchQuery } = useContext(SearchContext); // Access context to set global search query
+  const { setSearchQuery } = useContext(SearchProvider); // Access context to set global search query
   const [input, setInput] = useState(""); // Local state to track input value
   const navigate = useNavigate(); // React Router hook for programmatic navigation
 
@@ -68,7 +70,8 @@ const SearchBarToggle = () => {
 };
 
 // Main Navbar component: renders top navigation bar with routing, icons, and search
-const Navbar = ({ user }) => {
+const Navbar = () => {
+  const { user } = useUser();
   const [showSearch, setShowSearch] = useState(false); // Controls visibility of the search input
   const toggleSearch = () => setShowSearch((prev) => !prev); // Toggles search input visibility
   const location = useLocation(); // Provides current route info

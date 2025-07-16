@@ -53,3 +53,7 @@ h2 {
 select, option {
   font-family: 'Montserrat', sans-serif;
 }
+
+input::placeholder {
+  font-family: 'Montserrat', sans-serif;
+}

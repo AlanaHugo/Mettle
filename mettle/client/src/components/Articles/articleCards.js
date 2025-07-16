@@ -3,7 +3,6 @@ import { Paper, Typography } from "@mui/material";
 import "./ArticleCard.css";
 import { Link } from "react-router-dom";
 
-
 export default function ArticleCard({ article }) {
   if (!article) return <Typography>Article not found.</Typography>;
 
@@ -14,9 +13,9 @@ export default function ArticleCard({ article }) {
       style={{ textDecoration: "none", color: "inherit", display: "block" }}
     >
       <Paper className="articleCardPaper" elevation={3}>
-        <h3 className="articleCardTitle" gutterBottom>
+        <Typography variant="h3" className="articleCardTitle" gutterBottom>
           {article.title}
-        </h3>
+        </Typography>
         <Typography variant="subtitle2" color="textSecondary" gutterBottom>
           by {article.author} •{" "}
           {new Date(article.createdAt).toLocaleDateString()}
