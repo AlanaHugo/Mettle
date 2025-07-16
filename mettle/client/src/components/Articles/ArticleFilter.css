@@ -1,0 +1,40 @@
+.sidebar {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Wrapper for dropdown */
+.sortDropdown {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+/* Style for the select element */
+.dropContent {
+  appearance: none; /* removes native styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  background: white url('your-arrow.svg') no-repeat right 10px center;
+  background-size: 12px;
+  padding-right: 30px; /* room for arrow */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropContent:hover,
+.dropContent:focus,
+.dropContent:active {
+  background-color: #f0f0f0 !important; 
+  border-color: #502419 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.dropContent:focus-visible {
+  outline: 2px solid #502419;
+  outline-offset: 2px;
+}

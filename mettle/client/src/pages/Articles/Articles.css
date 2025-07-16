@@ -1,0 +1,37 @@
+.page-layout {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  width: 100%; /* Full width */
+  box-sizing: border-box;
+  margin: 0; /* no margin */
+}
+
+/* Filter sidebar with white background */
+.filterSidebar {
+  flex: 1 1 250px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+}
+
+/* Article cards container with background image */
+.articleGrid {
+  width: 100vw; /* Full viewport width */
+  min-height: 100vh; /* Full viewport height */
+  background-image: url("../../assets/flowers.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Cards themselves keep white background */
+.articleCardPaper {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 0 8px rgb(0 0 0 / 0.15);
+}
