@@ -1,6 +1,7 @@
 // Import required modules
 const express = require('express');
 const mongoose = require('mongoose');
+const swaggerSpec = require("./swagger");
 const cors = require('cors');
 require('dotenv').config(); // Load environment variables from .env file
 
