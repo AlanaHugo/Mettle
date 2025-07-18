@@ -3,7 +3,7 @@
 .flexBanner1 {
   position: relative;
   width: 100%;
-  min-height: 400px;
+  min-height: 75vh;
   color: black;
   padding: 2rem;
   background-image: url("/public/Images/daisies.jpg");
@@ -46,7 +46,38 @@
 }
 
 .Banner2 {
-text-align: center;
-align-content: center;
-background-color: #7ea172;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;        /* Let child divs match height */
+  background-color: white;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.Banner2Text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 20px;
+}
+
+.Banner2Img {
+  flex: 1;
+  min-height: 400px;            /* 👈 Force a visible height */
+  background-image: url("../../assets/pay-it-forward.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Responsive: Hide image on small screens */
+@media (max-width: 768px) {
+  .Banner2 {
+    flex-direction: column;
+  }
+
+  .Banner2Img {
+    display: none;
+  }
 }

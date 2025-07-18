@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 // Contexts and services
 import { useUser } from "../../context/userContext"; // User auth context
 import { SearchContext } from "../../context/SearchContext"; // Global search context
+import { useCart } from "../../context/cartContext";
 import { logoutUser } from "../../services/logoutUser"; // Clear token
 
 // Material UI components
@@ -18,6 +19,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import Badge from "@mui/material/Badge";
 import { styled } from "@mui/system";
 
 // MUI icons
@@ -85,6 +87,7 @@ const Navbar = () => {
   const location = useLocation();
   const [showSearch, setShowSearch] = useState(false);
   const toggleSearch = () => setShowSearch((prev) => !prev);
+  const { cartItems } = useCart();
 
   // Logout menu control
   const [anchorEl, setAnchorEl] = useState(null);
@@ -99,7 +102,10 @@ const Navbar = () => {
     setUser(null); // Clear user from context
     handleClose(); // Close dropdown
     navigate("/login", {
-      state: { message: "Thanks for visiting Mettle. You are now logged out of your account." },
+      state: {
+        message:
+          "Thanks for visiting Mettle. You are now logged out of your account.",
+      },
     });
   };
 
@@ -192,13 +198,20 @@ const Navbar = () => {
             </Button>
           )}
 
-          {/* Shopping cart */}
+          {/* Shopping cart with badge for items added */}
           <Button
             className={isActive("/cart") ? "Cart active" : "Cart"}
             component={Link}
             to="/cart"
           >
-            <ShoppingCartOutlinedIcon className="icon" />
+            <Badge
+              badgeContent={cartItems.length}
+              color="error"
+              overlap="rectangular"
+              invisible={cartItems.length === 0}
+            >
+              <ShoppingCartOutlinedIcon className="icon" />
+            </Badge>
           </Button>
         </div>
       </Toolbar>

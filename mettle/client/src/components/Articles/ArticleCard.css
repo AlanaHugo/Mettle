@@ -1,20 +1,36 @@
 .articleCardPaper {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 16px;
+  padding: 1rem;
   background-color: white;
-  border: 1px solid #ddd; /* light grey border */
-  border-radius: 8px;
-  
+  cursor: pointer;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .articleCardTitle {
-  font-family: 'Playfair', serif !important;
-  margin-bottom: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.articleCardMeta {
+  font-size: 0.9rem;
+  color: gray;
+  margin-bottom: 1rem;
 }
 
 .articleCardBody {
+  font-size: 1rem;
   color: #333;
-  margin-top: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
-
