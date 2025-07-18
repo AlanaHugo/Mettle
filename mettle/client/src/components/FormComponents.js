@@ -15,7 +15,7 @@ export const FullWidthInput = (props) => {
     <input
       type="text"
       style={{
-        width: "100%",        // Full width of parent container
+        width: "100%",        
         padding: "8px",
         marginBottom: "30px",
         boxSizing: "border-box",
@@ -40,7 +40,7 @@ export const SmallerInput = (props) => {
     <input
       type="text"
       style={{
-        width: "30%",         // Smaller fixed width (can be adjusted)
+        width: "30%",         
         minWidth: "150px",
         marginBottom: "30px",    
         padding: "8px",
@@ -79,5 +79,37 @@ export const FormContainer = ({ children, ...props }) => {
     >
       {children}
     </div>
+  );
+};
+
+
+// Input for more than one line of text
+// Used on form submission page
+
+/**
+ * FullTextInput
+ * --------------------------
+ * Reusable full-width text area input component.
+ * Supports text wrapping and scrollable overflow.
+ */
+export const FullTextInput = (props) => {
+  return (
+    <textarea
+      style={{
+        width: "100%",
+        height: "150px",
+        padding: "8px",
+        marginBottom: "30px",
+        boxSizing: "border-box",
+        fontFamily: "Montserrat",
+        lineHeight: "1.5",
+        resize: "vertical",
+        overflowY: "auto", // 🔹 Scrollbar when content exceeds height
+        whiteSpace: "pre-wrap", // 🔹 Preserve spaces and wrap lines
+        wordWrap: "break-word", // 🔹 Break long words to prevent overflow
+      }}
+      wrap="soft" 
+      {...props}
+    />
   );
 };
