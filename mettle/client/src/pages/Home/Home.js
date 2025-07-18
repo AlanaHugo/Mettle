@@ -34,6 +34,7 @@ const Home = () => {
             Join our community forum to read personal stories, share your own
             experiences, ask questions, and offer support to others walking a
             similar path.
+
           </p>
 
           {/* CTA Buttons linking to Products and Community Articles */}
