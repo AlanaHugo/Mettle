@@ -11,7 +11,7 @@ import axios from "axios";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/Products/ProductDetail";
 import Articles from "./pages/Articles/Articles";
-import SubmitArticle from "./pages/SubmitArticle";
+import SubmitArticle from "./pages/Articles/SubmitArticle";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Cart from "./pages/Cart";
