@@ -4,7 +4,6 @@ import { useParams, Link } from "react-router-dom"; // React Router hook to extr
 import useFetchArticle from "../../hooks/useFetchArticle"; // Custom hook to fetch a single article based on ID
 import "./ArticleDetails.css"; //styling
 import { PrimaryButton } from '../../components/Buttons' 
-import { Link } from "react-router-dom";
 
 
 // ArticleDetail component displays a full article based on the ID in the URL

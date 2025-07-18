@@ -1,10 +1,10 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');          // For hashing passwords securely
-const jwt = require('jsonwebtoken');         // For generating and verifying JSON Web Tokens (JWT)
-const User = require('../models/User');      // Mongoose User model
-require('dotenv').config();                   // Load environment variables from .env file
+const express = require("express");
+const bcrypt = require("bcryptjs"); // For hashing passwords securely
+const jwt = require("jsonwebtoken"); // For generating and verifying JSON Web Tokens (JWT)
+const User = require("../models/User"); // Mongoose User model
+require("dotenv").config(); // Load environment variables from .env file
 
-const router = express.Router();              // Create a router to define routes modularly
+const router = express.Router(); // Create a router to define routes modularly
 
 /**
  * POST /register
@@ -13,7 +13,7 @@ const router = express.Router();              // Create a router to define route
  * Checks if email already exists, hashes password, saves user.
  * Returns 201 on success or appropriate error messages.
  */
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
     const userExists = await User.findOne({ email });
     if (userExists) {
       // Email already registered - send client error
-      return res.status(400).json({ message: 'Email already registered' });
+      return res.status(400).json({ message: "Email already registered" });
     }
 
     // Hash password before saving for security
@@ -34,11 +34,11 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Respond with success
-    res.status(201).json({ message: 'User created' });
+    res.status(201).json({ message: "User created" });
   } catch (err) {
     // Catch any unexpected errors
-    console.error('Error in /register:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error in /register:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
  * Expects JSON body: { email, password }
  * Verifies credentials and returns token + user info.
  */
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -56,18 +56,22 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       // User not found
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // Compare provided password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       // Passwords don't match
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // Create JWT token with user ID payload, expires in 1 day
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    console.log("Signing token with secret:", process.env.JWT_SECRET);
+    console.log("Generated JWT token:", token);
 
     // Return token and user info (exclude password)
     res.json({
@@ -75,11 +79,11 @@ router.post('/login', async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
-      }
+      },
     });
   } catch (err) {
-    console.error('Error in /login:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error in /login:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -89,12 +93,12 @@ router.post('/login', async (req, res) => {
  * Token expected in 'Authorization' header as 'Bearer <token>'.
  * Returns user data except password or relevant errors.
  */
-router.get('/me', async (req, res) => {
+router.get("/me", async (req, res) => {
   // Extract token from Authorization header
-  const token = req.headers.authorization?.split(' ')[1]; // Format: 'Bearer <token>'
+  const token = req.headers.authorization?.split(" ")[1]; // Format: 'Bearer <token>'
 
   if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
+    return res.status(401).json({ message: "No token provided" });
   }
 
   try {
@@ -102,17 +106,17 @@ router.get('/me', async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Find user by ID, exclude password field for security
-    const user = await User.findById(decoded.id).select('-password');
+    const user = await User.findById(decoded.id).select("-password");
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Return user data
     res.json(user);
   } catch (err) {
-    console.error('Error in /me:', err);
-    res.status(401).json({ message: 'Invalid token' });
+    console.error("Error in /me:", err);
+    res.status(401).json({ message: "Invalid token" });
   }
 });
 
-module.exports = router;  // Export router to be used in main server app
+module.exports = router; // Export router to be used in main server app
