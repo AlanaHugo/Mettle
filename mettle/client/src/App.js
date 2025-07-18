@@ -76,6 +76,7 @@ function App() {
             <Route path="/submit" element={<SubmitArticle />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            
           </Routes>
 
           {/* Footer appears on every page */}

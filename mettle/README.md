@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# Mettle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Mettle is a full-stack web application built with **React**, **Express.js**, **MongoDB**, and **Node.js**, designed as a secure, user-friendly platform for product browsing, article reading, and community content sharing.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🌟 Features
 
-### `npm start`
+- 🔐 User authentication (login & registration)
+- 🛍 Product listing, filtering, and sorting
+- 📄 Product detail view
+- 🛒 Shopping cart functionality
+- ✍️ Article reading and submission (protected route)
+- 🗂 Admin options (optional extension)
+- 🌱 Built using the MVC architecture for scalability and maintainability
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧱 Tech Stack
 
-### `npm test`
+| Frontend      | Backend        | Database  | Tools & Libraries       |
+| ------------- | -------------- | --------- | ------------------------ |
+| React         | Express.js     | MongoDB   | Mongoose, JWT, bcryptjs |
+| React Router  | Node.js        |           | dotenv, nodemon         |
+| Tailwind CSS  |                |           |                         |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js
+- npm / yarn
+- MongoDB (local or MongoDB Atlas)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the repository**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/yourusername/mettle.git
+cd mettle
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Install dependencies**
 
-## Learn More
+# Install frontend dependencies
+cd client
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Install backend dependencies
+cd ../server
+npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Environment variables
+Create a .env file in the /server directory and add the following:
 
-### Code Splitting
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+🔐 Never commit your .env file.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Start the Application:
+npm run dev from the root folder will start the client and server concurrently.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+🧪 API Endpoints Overview
+Auth
+POST /api/auth/register – Register a user
 
-### Advanced Configuration
+POST /api/auth/login – Log in user and return JWT
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Products
+GET /api/products – Get all products
 
-### Deployment
+GET /api/products/:id – Get a single product
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Articles
+GET /api/articles – Fetch all articles
 
-### `npm run build` fails to minify
+POST /api/articles – Submit new article (requires token)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+🔐 Security Features
+Passwords hashed with bcrypt
+
+Authenticated routes using JWT
+
+Environment variables for secrets
+
+Optional: input validation middleware
+
+🚀 Deployment (Optional)
+If deploying to services like Render, Vercel, or Heroku:
+
+Add environment variables in the platform's config
+
+Ensure frontend and backend are connected via a proxy or environment-based URL
+
+For MongoDB Atlas, whitelist your IP and use the connection string in .env
+
+🤝 Contributing
+Fork the repo
+
+Create your branch: git checkout -b feature/some-feature
+
+Commit your changes: git commit -m "Add feature"
+
+Push to the branch: git push origin feature/some-feature
+
+Open a pull request
+
+📄 License
+This project is licensed under the MIT License. Feel free to use and modify as needed
