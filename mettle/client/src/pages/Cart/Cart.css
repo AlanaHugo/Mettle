@@ -1,0 +1,41 @@
+.CartContainer {
+  padding: 2rem;
+}
+
+.CartHdr {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.CartGrid {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.ImageDescrContainer {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+}
+
+.CartImg {
+  width: 20vw;
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.ImageDescrContainer .MuiTypography-root {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.ImageDescrContainer .MuiButton-root {
+  margin-top: 0.5rem;
+}

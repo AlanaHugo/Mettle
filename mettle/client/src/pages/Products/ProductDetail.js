@@ -4,29 +4,34 @@ import axios from "axios";
 import { Typography } from "@mui/material";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
+import { useCart } from "../../context/cartContext"; // Import useCart hook
 import "./ProductDetail.css";
 
-// Add to cart on click of primary button
-const ProductDetail = ({ addToCart }) => {
+const ProductDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { addToCart } = useCart(); // Get addToCart from cart context
+
   const [product, setProduct] = useState(null);
 
-  // Extract state passed from products list
-  const filterState = location.state?.from || {};
+  // Extract filters passed from products list to retain filter state on return
+  const filterState = location.state?.filters || {};
   const category = filterState.category;
 
-  // "Return to shop" with filters still applied on click of secondary button
+  const hasFilters = filterState && Object.keys(filterState).length > 0;
+
+  // Navigate back to products with filters preserved if any
   const handleGoBack = () => {
-    if (filterState) {
+    if (hasFilters) {
       navigate("/products", { state: { filters: filterState } });
     } else {
       navigate("/products");
     }
   };
 
+  // Fetch product details on mount or id change
   useEffect(() => {
     axios
       .get(`/api/products/${id}`)
@@ -40,12 +45,10 @@ const ProductDetail = ({ addToCart }) => {
     <>
       <Breadcrumbs category={category} productName={product.name} />
       <div className="details-Flex">
-        {/* Image */}
         <div className="image-Container">
           <img src={product.imageUrl} alt={product.name} width="300" />
         </div>
         <div className="text-and-buttons-Container">
-          {/* Text       */}
           <div className="text-Container">
             <Typography variant="h4">{product.name}</Typography>
             <Typography>${product.price}</Typography>
@@ -53,12 +56,9 @@ const ProductDetail = ({ addToCart }) => {
           </div>
 
           <div className="buttons-container">
-            <SecondaryButton onClick={handleGoBack}>
-              Back to results
-            </SecondaryButton>
-            <PrimaryButton onClick={() => addToCart(product)}>
-              Add to Cart
-            </PrimaryButton>
+            <SecondaryButton onClick={handleGoBack}>Back to results</SecondaryButton>
+            {/* Use addToCart from context */}
+            <PrimaryButton onClick={() => addToCart(product)}>Add to Cart</PrimaryButton>
           </div>
         </div>
       </div>

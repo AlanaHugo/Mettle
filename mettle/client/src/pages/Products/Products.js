@@ -1,5 +1,6 @@
 // Import React and hooks for managing state and lifecycle
 import React, { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 
 // Import the filter sidebar and individual product card component
 import ProductFilter from "../../components/Products/ProductFilter";
@@ -25,7 +26,8 @@ export default function Products() {
   const [products, setProducts] = useState([]);
 
   // State to track active filters (e.g., category, sort)
-  const [filters, setFilters] = useState({});
+  const location = useLocation();
+const [filters, setFilters] = useState(location.state?.filters || {});
 
   // When the component first loads, fetch product data from backend
   useEffect(() => {
@@ -50,8 +52,8 @@ export default function Products() {
         <div className="product-grid">
           {/* Loop through sorted products and display each one */}
           {sorted.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+  <ProductCard key={product._id} product={product} filters={filters} />
+))}
         </div>
       </main>
 

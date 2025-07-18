@@ -3,7 +3,9 @@ import React from "react";
 import { useParams, Link } from "react-router-dom"; // React Router hook to extract dynamic route parameters
 import useFetchArticle from "../../hooks/useFetchArticle"; // Custom hook to fetch a single article based on ID
 import "./ArticleDetails.css"; //styling
-import { PrimaryButton } from '../../components/Buttons'
+import { PrimaryButton } from '../../components/Buttons' 
+import { Link } from "react-router-dom";
+
 
 // ArticleDetail component displays a full article based on the ID in the URL
 const ArticleDetail = () => {
@@ -40,7 +42,7 @@ const ArticleDetail = () => {
           {/* Author description — currently placeholder text */}
           <p className="authDescr">
             {article.author
-              ? `${article.author} is a contributor who wanted to share their story.`
+              ? `${article.author}. ${article.aboutAuth}.`
               : "Contributor bio coming soon."}
           </p>
 

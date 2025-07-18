@@ -20,14 +20,21 @@ const Home = () => {
         <div className="textBlock1">
           <h2>What to give when you don't know what to give.</h2>
           <p>
-            Thoughtfully curated gifts for yourself or someone special
-            navigating a diagnosis or hospital stay.
+            Mettle offers thoughtfully curated care packs designed for those
+            navigating diagnosis, treatment, or recovery. Each pack is crafted
+            with practical essentials recommended by a community who understands
+            the journey firsthand.
           </p>
           <p>
-            Our practical supplies come recommended by a community with
-            firsthand experience with medical journeys. You can read their
-            stories and advice, connect with others and share your own stories
-            and advice.
+            Explore our carefully selected gifts to support yourself or a loved
+            one, and connect with others by reading stories, sharing advice, and
+            finding comfort in a community that truly gets it.
+          </p>
+          <p>
+            Join our community forum to read personal stories, share your own
+            experiences, ask questions, and offer support to others walking a
+            similar path.
+
           </p>
 
           {/* CTA Buttons linking to Products and Community Articles */}

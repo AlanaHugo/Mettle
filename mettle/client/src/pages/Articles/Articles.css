@@ -1,37 +1,93 @@
-.page-layout {
+/* 
+  Overall layout:
+  Flex container with sidebar and main content area.
+  Gap and padding create spacing between elements and page edges.
+*/
+.articlesPage {
   display: flex;
-  gap: 16px;
-  padding: 16px;
-  width: 100%; /* Full width */
+  padding: 2rem;
+  gap: 2rem;
   box-sizing: border-box;
-  margin: 0; /* no margin */
+  flex-wrap: nowrap; /* Prevent wrapping so sidebar and grid stay side-by-side */
 }
 
-/* Filter sidebar with white background */
+/* Sidebar styling */
+/* Fixed width sidebar that holds filters, doesn't shrink */
 .filterSidebar {
-  flex: 1 1 250px;
-  background-color: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  width: 250px;
+  flex-shrink: 0;
 }
 
-/* Article cards container with background image */
+/* Main content grid */
+/* Takes remaining horizontal space, uses CSS grid for cards */
 .articleGrid {
-  width: 100vw; /* Full viewport width */
-  min-height: 100vh; /* Full viewport height */
-  background-image: url("../../assets/flowers.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 16px;
-  box-sizing: border-box;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Responsive columns */
+  gap: 2rem; /* Space between grid items */
 }
 
-/* Cards themselves keep white background */
+/* Wrapper around each article card */
+/* Flex container to force each card to stretch to full height */
+.articleCardWrapper {
+  display: flex;
+  height: 100%;
+}
+
+/* Styling the MUI Paper component used as the article card */
+/* Layout: vertical flex column, spaced content, consistent height and width */
 .articleCardPaper {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: #fff;
   border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 0 8px rgb(0 0 0 / 0.15);
+  height: 100%;          /* Fill wrapper height for consistent card heights */
+  width: 100%;           /* Fill wrapper width */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  transition: transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Hover effect to lift card slightly on mouseover for better UX */
+.articleCardPaper:hover {
+  transform: translateY(-3px);
+}
+
+/* Title styling */
+/* Larger bold text, truncated with ellipsis if too long */
+.articleCardTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent wrapping to maintain consistent height */
+}
+
+/* Meta info styling: author and date */
+/* Smaller, lighter text with truncation to prevent overflow */
+.articleCardMeta {
+  font-size: 0.875rem;
+  color: #888;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Article body snippet */
+/* Limit text to 4 lines, add ellipsis if longer */
+.articleCardBody {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Clamp text lines for uniform height */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }

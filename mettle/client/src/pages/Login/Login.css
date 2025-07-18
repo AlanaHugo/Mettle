@@ -3,10 +3,11 @@
 }
 
 .formFields {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center horizontally */
+  gap: 20px;                /* spacing between inputs */
+  padding: 20px;
 }
 
 .formButton {
