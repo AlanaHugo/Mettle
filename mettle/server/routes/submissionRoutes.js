@@ -1,37 +1,67 @@
+import express from 'express';
+import authMiddleware from '../middleware/authMiddleware.js';
+import { createSubmission } from '../controllers/submissionController.js';
 
-console.log("✅ submissionRoutes file loaded"); 
+const router = express.Router();
 
+console.log('✅ submissionRoutes file loaded');
 
-// Import Express to create the router
-const express = require('express');
-const router = express.Router(); // Create an instance of Express Router
+/**
+ * @swagger
+ * tags:
+ *   name: Submission
+ *   description: Routes for article submissions
+ */
 
-// Import authentication middleware to protect the route
-const authMiddleware = require('../middleware/authMiddleware');
+/**
+ * @swagger
+ * /api/submission:
+ *   post:
+ *     summary: Allows an authenticated user to submit an article (with optional anonymity and contact).
+ *     tags: [Submission]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               aboutAuth:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               contact:
+ *                 type: boolean
+ *               social:
+ *                 type: string
+ *               anonymous:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Submission successful
+ *       401:
+ *         description: Unauthorized
+ */
+router.post('/', authMiddleware, createSubmission);
 
-// Import the controller function that handles submission logic
-const { createSubmission } = require('../controllers/submissionController');
-
-
-console.log('submissionRoutes loaded');
-
-router.get("/test-auth", authMiddleware, (req, res) => {
-  console.log("✅ /test-auth route hit");
+/**
+ * @swagger
+ * /api/submission/test-auth:
+ *   get:
+ *     summary: Test route to verify JWT middleware works.
+ *     tags: [Submission]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Returns user info if authenticated
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/test-auth', authMiddleware, (req, res) => {
   res.json({ user: req.user });
 });
 
-/**
- * @route   POST /api/submission
- * @desc    Submit a new article (requires authentication)
- * @access  Private
- *
- * Middleware:
- * - authMiddleware: Verifies JWT token and attaches user to request
- *
- * Controller:
- * - createSubmission: Handles the logic for creating and saving a new article
- */
-router.post('/', authMiddleware, createSubmission);  // Protected route
-
-// Export the router to be used in the main server file
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import { useCart } from '../../context/cartContext'; // Access cart state and actions
+import { useCart } from '../../context/cartContext.js'; // Access cart state and actions
 import "./Cart.css";
 
 

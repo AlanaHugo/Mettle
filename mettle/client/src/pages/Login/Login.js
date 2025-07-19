@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
-import { loginUser } from "../../services/loginUser"; // API service for login
-import { useLoginForm } from "../../hooks/useLoginForm"; // Custom hook for input state
-import { useUser } from "../../context/userContext"; // Access global user context
-import { FormContainer, SmallerInput } from "../../components/FormComponents"; // Reusable styled input components
-import { PrimaryButton } from "../../components/Buttons"; // Styled button
+import { loginUser } from "../../services/loginUser.js"; // API service for login
+import { useLoginForm } from "../../hooks/useLoginForm.js"; // Custom hook for input state
+import { useUser } from "../../context/userContext.js"; // Access global user context
+import { FormContainer, SmallerInput } from "../../components/FormComponents.js"; // Reusable styled input components
+import { PrimaryButton } from "../../components/Buttons.js"; // Styled button
 
 import "./Login.css"; // Local styles
 

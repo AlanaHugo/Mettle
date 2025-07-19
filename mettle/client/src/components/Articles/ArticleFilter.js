@@ -1,7 +1,7 @@
 // ArticleFilter.js
 
 import React from "react";
-import { TAG_OPTIONS, SORT_OPTIONS } from "../../config/articleFilter"; // Static config for dropdown and checkbox filters
+import { TAG_OPTIONS, SORT_OPTIONS } from "../../config/articleFilter.js"; // Static config for dropdown and checkbox filters
 import { useArticleFilterHandlers } from "../../hooks/useArticlesFilterHandlers.js"; // Handles filter input changes
 
 /**

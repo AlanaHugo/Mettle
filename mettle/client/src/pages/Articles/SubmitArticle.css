@@ -1,4 +1,85 @@
-.header {
-    display: flex;
-    justify-content: center;
+/* SubmitArticle.css */
+
+/* Container for the whole form */
+form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Labels styling */
+form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #502419;
+}
+
+/* Text inputs and textarea styling */
+form input[type="text"],
+form textarea {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+  border-color: #a65c3f;
+  outline: none;
+}
+
+/* Checkbox label container */
+form label input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.2);
+  vertical-align: middle;
+}
+
+/* Buttons container for spacing */
+form button[type="submit"] {
+  background-color: #a65c3f;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #7a432a;
+}
+
+/* Error and success messages */
+form p {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+form p.error {
+  color: #cc0000;
+}
+
+form p.success {
+  color: #007700;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  form {
+    padding: 1rem;
+    margin: 1rem;
+  }
 }

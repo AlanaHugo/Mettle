@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Typography } from "@mui/material";
-import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
-import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
-import { useCart } from "../../context/cartContext"; // Import useCart hook
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs.js";
+import { PrimaryButton, SecondaryButton } from "../../components/Buttons.js";
+import { useCart } from "../../context/cartContext.js"; // Import useCart hook
 import "./ProductDetail.css";
 
 const ProductDetail = () => {

@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 
 // Import function to fetch articles from backend
-import { fetchArticles } from "../../controllers/Articles/fetchArticlesController";
+import { fetchArticles } from "../../controllers/Articles/fetchArticlesController.js";
 
 // Import reusable components
-import ArticleCard from "../../components/Articles/ArticleCards";
-import BackToTop from "../../components/BackToTop/BackToTop";
-import ArticleFilter from "../../components/Articles/ArticleFilter";
+import ArticleCard from "../../components/Articles/ArticleCards.js";
+import BackToTop from "../../components/BackToTop/BackToTop.js";
+import ArticleFilter from "../../components/Articles/ArticleFilter.js";
 
 // Import filter and sort functions for article data
 import {
   sortArticles,
   filterArticles,
-} from "../../controllers/Articles/filterController";
+} from "../../controllers/Articles/filterController.js";
 
 // Styles specific to Articles page
 import "../Articles/Articles.css";

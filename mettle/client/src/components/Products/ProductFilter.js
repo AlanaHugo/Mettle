@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CATEGORY_OPTIONS, SORT_OPTIONS } from "../../config/productFilters.js"; // External config arrays for sort and category options
-import { useProductFilterHandlers } from "../../hooks/useProductFilterHandlers"; // Custom hook for handling input changes
+import { useProductFilterHandlers } from "../../hooks/useProductFilterHandlers.js"; // Custom hook for handling input changes
 
 /**
  * ProductFilter Sidebar

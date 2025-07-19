@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { registerUser } from "../../services/registerUser";
-import { FormContainer, FullWidthInput } from "../../components/FormComponents"; // Using FullWidthInput only now
+import { registerUser } from "../../services/registerUser.js";
+import { FormContainer, FullWidthInput } from "../../components/FormComponents.js"; // Using FullWidthInput only now
 import "./Register.css";
-import { PrimaryButton } from "../../components/Buttons";
+import { PrimaryButton } from "../../components/Buttons.js";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -80,9 +80,8 @@ const Register = () => {
 
           </div>
 
-          <div className="formButton">
             <PrimaryButton type="submit">Register</PrimaryButton>
-          </div>
+
         </form>
       </FormContainer>
     </div>

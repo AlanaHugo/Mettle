@@ -1,4 +1,4 @@
-import { fetchSearchResults } from "./SearchResultsService";
+import { fetchSearchResults } from "./SearchResultsService.js";
 
 export async function getSearchResults(query) {
   try {

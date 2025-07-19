@@ -1,22 +1,32 @@
-const swaggerJSDoc = require("swagger-jsdoc");
+// swagger.js
+import swaggerJSDoc from 'swagger-jsdoc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "My API Documentation",
-      version: "1.0.0",
-      description: "API documentation for my application",
+      title: 'Mettle API',
+      version: '1.0.0',
+      description: 'API documentation for Mettle backend',
     },
-    servers: [
-      {
-        url: "http://localhost:5000", 
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
       },
-    ],
+    },
+    security: [{ bearerAuth: [] }],
   },
-  apis: ["./routes/*.js"], // path to files with Swagger comments
+  apis: [path.join(__dirname, 'routes/*.js')],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
-
-module.exports = swaggerSpec;
+export default swaggerSpec;

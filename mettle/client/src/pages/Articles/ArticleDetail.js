@@ -1,9 +1,9 @@
 //Imports
 import React from "react";
 import { useParams, Link } from "react-router-dom"; // React Router hook to extract dynamic route parameters
-import useFetchArticle from "../../hooks/useFetchArticle"; // Custom hook to fetch a single article based on ID
+import useFetchArticle from "../../hooks/useFetchArticle.js"; // Custom hook to fetch a single article based on ID
 import "./ArticleDetails.css"; //styling
-import { PrimaryButton } from '../../components/Buttons' 
+import { PrimaryButton } from '../../components/Buttons.js' 
 
 
 // ArticleDetail component displays a full article based on the ID in the URL

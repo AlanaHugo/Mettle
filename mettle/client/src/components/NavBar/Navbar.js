@@ -3,10 +3,9 @@ import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Contexts and services
-import { useUser } from "../../context/userContext"; // User auth context
-import { SearchContext } from "../../context/SearchContext"; // Global search context
-import { useCart } from "../../context/cartContext";
-import { logoutUser } from "../../services/logoutUser"; // Clear token
+import { useUser } from "../../context/userContext.js"; // User auth context
+import { SearchContext } from "../../context/SearchContext.js"; // Global search context
+import { useCart } from "../../context/cartContext.js";
 
 // Material UI components
 import {
@@ -82,7 +81,7 @@ const SearchBarToggle = () => {
  * Renders the Mettle top navigation bar with links, search, and user/logout handling.
  */
 const Navbar = () => {
-  const { user, setUser } = useUser(); // Access user context
+  const { user, logout } = useUser(); // Use logout from context
   const navigate = useNavigate();
   const location = useLocation();
   const [showSearch, setShowSearch] = useState(false);
@@ -98,8 +97,7 @@ const Navbar = () => {
 
   // Logout function
   const handleLogout = () => {
-    logoutUser(); // Clear token from storage
-    setUser(null); // Clear user from context
+    logout(); // Use context logout
     handleClose(); // Close dropdown
     navigate("/login", {
       state: {

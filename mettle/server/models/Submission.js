@@ -1,8 +1,11 @@
-const mongoose = require('mongoose');
+// models/Submission.js
+// Mongoose schema/model for article submissions
+
+import mongoose from 'mongoose';
 
 const submissionSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // optional user reference
-  email: { type: String }, // optional email of submitter
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Optional reference
+  email: { type: String }, // Optional email of submitter
   aboutAuth: { type: String, required: true },
   contact: { type: Boolean, default: false },
   anonymous: { type: Boolean, default: false },
@@ -11,4 +14,6 @@ const submissionSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Submission', submissionSchema);
+const Submission = mongoose.model('Submission', submissionSchema);
+
+export default Submission;

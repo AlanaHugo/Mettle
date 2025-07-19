@@ -45,16 +45,17 @@
   margin-top: 1.5rem;
 }
 
+/* Banner 2: Pay it Forward */
+
 .Banner2 {
   display: flex;
   justify-content: space-between;
-
   align-items: stretch;        /* Let child divs match height */
   background-color: white;
   gap: 20px;
   padding: 20px;
   flex-wrap: wrap;
-
+  min-height: 400px;           /* Ensure visible height */
 }
 
 .Banner2Text {
@@ -64,6 +65,7 @@
   padding: 0rem 2rem;
   margin-bottom: 4px;
   flex: 1; /* Let text take available space */
+  
 }
 
 .Banner2Text h2 {
@@ -74,34 +76,23 @@
   margin: 6px 0;        /* Tight spacing between paragraphs */
   line-height: 1.5;     /* Slightly tighter line spacing */
   flex: 1;
-  padding: 0 20px;
+  
 }
 
 .Banner2Img {
   flex: 1;
-
-  background-image: url("../../assets/PayitForward.jpg");
+  background-image: url("../../assets/pay-it-forward.png"); /* Public folder path */
   padding-right: 2rem;
-  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding-right: 2rem;
-
-  height: 100%; /* fill parent's height */
-  min-width: 300px; /* optional, ensure visible */
-}
-
-/* Hide image on phones */
-@media (max-width: 768px) {
-=======
-  min-height: 400px;            /* 👈 Force a visible height */
-  background-image: url("../../assets/pay-it-forward.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  height: 100%;
+  min-width: 400px;
+  height: 400px; /* explicit height */
+  justify-content: right;
 }
 
 /* Responsive: Hide image on small screens */
+
 @media (max-width: 768px) {
   .Banner2 {
     flex-direction: column;

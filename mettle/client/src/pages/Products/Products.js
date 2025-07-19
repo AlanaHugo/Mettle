@@ -3,22 +3,22 @@ import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 // Import the filter sidebar and individual product card component
-import ProductFilter from "../../components/Products/ProductFilter";
-import ProductCard from "../../components/Products/ProductCard";
+import ProductFilter from "../../components/Products/ProductFilter.js";
+import ProductCard from "../../components/Products/ProductCard.js";
 
 // Import controller functions that fetch, filter, and sort products
-import { fetchProducts } from "../../controllers/Products/fetchProductsController";
+import { fetchProducts } from "../../controllers/Products/fetchProductsController.js";
 
 import {
   sortProducts,
   filterProducts,
-} from "../../controllers/Products/filterController";
+} from "../../controllers/Products/filterController.js";
 
 // Import component-specific styling
 import "./Products.css";
 
 // Import reusable "Back to Top" button
-import BackToTop from "../../components/BackToTop/BackToTop";
+import BackToTop from "../../components/BackToTop/BackToTop.js";
 
 // Main Products page component
 export default function Products() {

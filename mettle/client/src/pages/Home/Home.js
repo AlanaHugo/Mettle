@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Typography, Box } from "@mui/material"; // MUI components for layout and styling
 import { Link } from "react-router-dom"; // For navigation
 import "./Home.css"; // Local styles specific to the Home page
-import { PrimaryButton, SecondaryButton } from "../../components/Buttons"; // Custom reusable button components
+import { PrimaryButton, SecondaryButton } from "../../components/Buttons.js"; // Custom reusable button components
 
 /**
  * Home Component

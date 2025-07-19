@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getSearchResults } from "./SearchResultsController";
-import SearchResultsView from "./SearchResultsView";
+import { getSearchResults } from "./SearchResultsController.js";
+import SearchResultsView from "./SearchResultsView.js";
 import { useLocation } from "react-router-dom";
 
 const SearchResultsPage = () => {
