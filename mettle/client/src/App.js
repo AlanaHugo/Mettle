@@ -13,6 +13,8 @@ import Cart from "./pages/Cart/Cart.js";
 import Home from "./pages/Home/Home.js";
 import SearchResults from "./pages/SearchResults/SearchResultsPage.js";
 import ArticleDetail from "./pages/Articles/ArticleDetail.js";
+import MyArticles from "./pages/Articles/MyArticles.js";
+import EditArticle from "./pages/Articles/editArticle.js";
 
 // Importing shared UI components with explicit .js extensions
 import NavBar from "./components/NavBar/Navbar.js";
@@ -58,6 +60,8 @@ function App() {
               <Route path="/submit" element={<SubmitArticle />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/my-articles" element={<MyArticles />} />
+              <Route path="/edit-article/:id" element={<EditArticle />} />
             </Routes>
 
             {/* Footer component shown on all pages */}

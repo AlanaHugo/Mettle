@@ -183,6 +183,13 @@ const Navbar = () => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
               >
+                <MenuItem onClick={() => {
+  console.log("Manage Articles clicked");
+  navigate("/my-articles");
+  handleClose();
+}}>
+  Manage Articles
+</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>

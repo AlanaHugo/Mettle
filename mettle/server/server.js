@@ -21,6 +21,7 @@ import articleRoutes from './routes/articleRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import searchRoutes from './routes/searchRoutes.js';
 import submissionRoutes from './routes/submissionRoutes.js';
+import myArticleRoutes from './routes/myArticleRoutes.js'
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/articles', articleRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/submission', submissionRoutes);
+app.use("/api/my-articles", myArticleRoutes);
 
 // Swagger API docs route (available at /api-docs)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -55,5 +57,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Debug log to verify JWT_SECRET loaded
-console.log('JWT_SECRET is:', process.env.JWT_SECRET);
+

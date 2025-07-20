@@ -1,61 +1,45 @@
+// SearchResultsPage.js
 import React, { useEffect, useState } from "react";
-import { getSearchResults } from "./SearchResultsController.js";
+import { getSearchResults } from "./SearchResultsController.js"; // your existing controller
 import SearchResultsView from "./SearchResultsView.js";
 import { useLocation } from "react-router-dom";
 
 const SearchResultsPage = () => {
-  // Get the current URL location object
   const location = useLocation();
-
-  // Parse query parameters from the URL (?q=searchTerm)
   const queryParams = new URLSearchParams(location.search);
-
-  // Extract the 'q' parameter value (the search term)
   const searchTerm = queryParams.get("q");
 
-  // State to store the search results data
-  const [results, setResults] = useState([]);
-
-  // State to track whether the search results are loading
+  const [products, setProducts] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // State to track if there was an error fetching results
   const [error, setError] = useState(null);
 
-  // useEffect runs when 'searchTerm' changes (or on first render)
   useEffect(() => {
-    // If there's no search term, clear results and stop loading
     if (!searchTerm) {
-      setResults([]);
+      setProducts([]);
+      setArticles([]);
       setLoading(false);
-      return; // exit early
+      return;
     }
 
-    // Start loading before fetching
     setLoading(true);
 
-    // Call the function that fetches results from backend
     getSearchResults(searchTerm)
       .then((data) => {
-        // On success, save the results and stop loading
-        setResults(data);
+        setProducts(data.products || []);
+        setArticles(data.articles || []);
         setLoading(false);
       })
       .catch((err) => {
-        // On error, save error message and stop loading
         setError(err.message);
         setLoading(false);
       });
-  }, [searchTerm]); // dependency array: run effect when searchTerm changes
+  }, [searchTerm]);
 
-  // While fetching, show a loading message
   if (loading) return <p>Loading...</p>;
-
-  // If error , show error message
   if (error) return <p>Error: {error}</p>;
 
-  // If all is good, render the results with SearchResultsView component
-  return <SearchResultsView results={results} />;
+  return <SearchResultsView products={products} articles={articles} />;
 };
 
 export default SearchResultsPage;

@@ -1,7 +1,7 @@
-// src/context/UserContext.js
+// src/context/userContext.js
 import { createContext, useContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import { logoutUser } from "../services/logoutUser.js"; // Adjust path as needed
+import { jwtDecode } from "jwt-decode"; // default import
+import { logoutUser } from "../services/logoutUser.js"; // your logout helper
 
 // Create the context
 export const UserContext = createContext();
@@ -10,24 +10,31 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Check for token on first load and decode it
+  // On mount, decode token if present
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser(decoded);
+
+        // Normalize user object to use `id` instead of `_id`
+        const normalizedUser = {
+          ...decoded,
+          id: decoded.id || decoded._id || decoded.userId, // prefer id; fallback to others
+        };
+
+        setUser(normalizedUser);
       } catch (err) {
-        console.error("Invalid token");
-        logoutUser(); // Remove bad token
+        console.error("Invalid token:", err);
+        logoutUser(); // clear bad token & user state
       }
     }
   }, []);
 
-  // Logout function to clear token and state
+  // Logout function clears token and user state
   const logout = () => {
-    logoutUser();   // Remove token from localStorage
-    setUser(null);  // Clear user state
+    logoutUser();
+    setUser(null);
   };
 
   return (
@@ -37,5 +44,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Custom hook for accessing context
+// Custom hook for easier access to user context
 export const useUser = () => useContext(UserContext);

@@ -11,6 +11,7 @@ const articleSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// Optional: text index for search
 articleSchema.index({ title: "text", body: "text" });
 
-export default mongoose.models.Article || mongoose.model("Article", articleSchema);
+export default mongoose.model("MyArticle", articleSchema);
