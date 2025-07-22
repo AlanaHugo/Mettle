@@ -1,5 +1,3 @@
-// routes/searchRoutes.js
-
 /**
  * Search Routes
  * --------------
@@ -13,9 +11,54 @@ import Article from '../models/Article.js';
 const router = express.Router();
 
 /**
- * GET /api/search?q=searchTerm
- * Performs text search on products and articles collections.
- * Returns matching products and articles.
+ * @swagger
+ * tags:
+ *   name: Search
+ *   description: Full-text search on products and articles
+ */
+
+/**
+ * @swagger
+ * /api/search:
+ *   get:
+ *     summary: Search products and articles by query string
+ *     tags: [Search]
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The search term to query products and articles
+ *         example: cancer
+ *     responses:
+ *       200:
+ *         description: Search results containing matching products and articles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ *                 articles:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Article'
+ *       400:
+ *         description: Missing search query parameter "q"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Search failed due to server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/', async (req, res) => {
   const query = req.query.q;

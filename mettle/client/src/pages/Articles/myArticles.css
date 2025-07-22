@@ -1,0 +1,39 @@
+.pageDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.mtArticleHdr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;    
+  align-items: center;         
+  height: 100%;               
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.articleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-content: flex-start;
+    height: 100%;
+    width: auto;
+}
+
+.articleDetails {
+    width: 85vw;
+    height:auto;
+}
+
+.ArticleTitle {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5em;
+}
+

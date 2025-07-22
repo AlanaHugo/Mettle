@@ -3,7 +3,6 @@
 .flexBanner1 {
   position: relative;
   width: 100%;
-  min-height: 75vh;
   color: black;
   padding: 2rem;
   background-image: url("/public/Images/daisies.jpg");
@@ -79,11 +78,23 @@
   
 }
 
+.Banner2Text h2 {
+  margin-bottom: 8px;
+  width: 50vw;
+}
+
+.Banner2Text p {
+  margin: 6px 0;        /* Tight spacing between paragraphs */
+  line-height: 1.5;     /* Slightly tighter line spacing */
+  flex: 1;
+  
+}
+
 .Banner2Img {
   flex: 1;
   background-image: url("../../assets/pay-it-forward.png"); /* Public folder path */
   padding-right: 2rem;
-  background-position: center;
+  background-position: right;
   background-repeat: no-repeat;
   height: 100%;
   min-width: 400px;

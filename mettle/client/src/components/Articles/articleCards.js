@@ -9,9 +9,11 @@ export default function ArticleCard({ article }) {
   return (
     // Link to article using ID
     <Link
+    
       to={`/articles/${article._id}`}
       style={{ textDecoration: "none", color: "inherit", display: "block" }}
     >
+      <div className="cardDiv">
       <Paper className="articleCardPaper" elevation={3}>
         <Typography variant="h3" className="articleCardTitle" gutterBottom>
           {article.title}
@@ -26,6 +28,7 @@ export default function ArticleCard({ article }) {
             : "No preview available."}
         </Typography>
       </Paper>
+      </div>
     </Link>
   );
 }

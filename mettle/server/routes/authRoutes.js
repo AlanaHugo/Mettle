@@ -1,52 +1,149 @@
 const express = require("express");
 const bcrypt = require("bcryptjs"); // For hashing passwords securely
-const jwt = require("jsonwebtoken"); // For generating and verifying JSON Web Tokens (JWT)
+const jwt = require("jsonwebtoken"); // For generating/verifying JSON Web Tokens (JWT)
 const User = require("../models/User"); // Mongoose User model
 require("dotenv").config(); // Load environment variables from .env file
 
-const router = express.Router(); // Create a router to define routes modularly
+const router = express.Router(); // Create a router instance for modular routes
 
 /**
- * POST /register
- * Register a new user.
- * Expects JSON body: { firstName, lastName, email, password }
- * Checks if email already exists, hashes password, saves user.
- * Returns 201 on success or appropriate error messages.
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: User registration, login and profile retrieval
+ */
+
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - password
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *                 example: John
+ *               lastName:
+ *                 type: string
+ *                 example: Doe
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john.doe@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: strongPassword123
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User created
+ *       400:
+ *         description: Email already registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
  */
 router.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    // Check if user with this email already exists
+    // Check if a user with this email already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      // Email already registered - send client error
       return res.status(400).json({ message: "Email already registered" });
     }
 
-    // Hash password before saving for security
+    // Hash password securely before saving
     const hashed = await bcrypt.hash(password, 10);
 
-    // Create new user document with hashed password
+    // Create new user with hashed password
     const user = new User({ firstName, lastName, email, password: hashed });
 
-    // Save user to database
+    // Save the new user document in the database
     await user.save();
 
-    // Respond with success
+    // Success response
     res.status(201).json({ message: "User created" });
   } catch (err) {
-    // Catch any unexpected errors
     console.error("Error in /register:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 /**
- * POST /login
- * Authenticate user and return JWT.
- * Expects JSON body: { email, password }
- * Verifies credentials and returns token + user info.
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Authenticate user and return a JWT token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john.doe@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: strongPassword123
+ *     responses:
+ *       200:
+ *         description: Authentication successful, returns JWT token and user info
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: JWT token for authenticated requests
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: User ID
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *       400:
+ *         description: Invalid credentials (email or password)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
  */
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -55,25 +152,21 @@ router.post("/login", async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      // User not found
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Compare provided password with hashed password
+    // Compare given password to hashed password in DB
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      // Passwords don't match
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Create JWT token with user ID payload, expires in 1 day
+    // Sign JWT token with user ID payload, expires in 1 day
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    console.log("Signing token with secret:", process.env.JWT_SECRET);
-    console.log("Generated JWT token:", token);
 
-    // Return token and user info (exclude password)
+    // Return token and user info (excluding password)
     res.json({
       token,
       user: {
@@ -88,30 +181,57 @@ router.post("/login", async (req, res) => {
 });
 
 /**
- * GET /me
- * Get current logged-in user info from JWT token.
- * Token expected in 'Authorization' header as 'Bearer <token>'.
- * Returns user data except password or relevant errors.
+ * @swagger
+ * /api/auth/me:
+ *   get:
+ *     summary: Get currently authenticated user info
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []  # Indicates JWT bearer token required
+ *     responses:
+ *       200:
+ *         description: Returns user information excluding password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: 64f8e6dd31beec2b345abc78
+ *                 email:
+ *                   type: string
+ *                   example: user@example.com
+ *                 username:
+ *                   type: string
+ *                   example: johndoe
+ *       401:
+ *         description: No token provided or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get("/me", async (req, res) => {
-  // Extract token from Authorization header
-  const token = req.headers.authorization?.split(" ")[1]; // Format: 'Bearer <token>'
+  // Extract token from 'Authorization' header, format: 'Bearer <token>'
+  const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
 
   try {
-    // Verify token and decode payload
+    // Verify and decode token using JWT secret
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find user by ID, exclude password field for security
+    // Find user by decoded ID and exclude password field
     const user = await User.findById(decoded.id).select("-password");
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Return user data
+    // Return user info
     res.json(user);
   } catch (err) {
     console.error("Error in /me:", err);
@@ -119,4 +239,4 @@ router.get("/me", async (req, res) => {
   }
 });
 
-module.exports = router; // Export router to be used in main server app
+module.exports = router;

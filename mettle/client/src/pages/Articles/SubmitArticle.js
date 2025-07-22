@@ -8,7 +8,12 @@
 import React, { useState, useContext } from "react";
 import { submitArticle } from "../../services/submissionService.js";
 import { UserContext } from "../../context/userContext.js"; // Adjust import path
-import "./SubmitArticle.css";
+import "../../pages/Forms.css";
+import {
+  SmallerInput,
+  FullWidthInput,
+} from "../../components/FormComponents.js";
+import { PrimaryButton, SecondaryButton } from "../../components/Buttons.js";
 
 const SubmitArticle = () => {
   const { user, setUser } = useContext(UserContext);
@@ -17,7 +22,6 @@ const SubmitArticle = () => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    
   }; // Assume user context provides token & logout
   const [form, setForm] = useState({
     aboutAuth: "",
@@ -54,7 +58,8 @@ const SubmitArticle = () => {
     }
 
     try {
-      await submitArticle(form, token);
+      console.log("Form data being submitted:", form);
+      await submitArticle({ ...form, userId: user?._id }, token);
       setSuccess("Submission successful!");
       setForm({
         aboutAuth: "",
@@ -62,6 +67,7 @@ const SubmitArticle = () => {
         contact: false,
         social: "",
         anonymous: false,
+        userId: user?._id || "",
       });
       setError("");
     } catch (err) {
@@ -75,63 +81,80 @@ const SubmitArticle = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        About Author*:
-        <input
-          type="text"
-          name="aboutAuth"
-          value={form.aboutAuth}
-          onChange={handleChange}
-          required
-        />
-      </label>
+    <>
+      <div className="formContainer">
+        {/* contains background image and form contents */}
 
-      <label>
-        Content*:
-        <textarea
-          name="content"
-          value={form.content}
-          onChange={handleChange}
-          required
-        />
-      </label>
+        <form onSubmit={handleSubmit}>
+          <div className="HdrSection">
+            {/*contains heading (h2) and description <p>*/}
+            <h2>Share with our community</h2>
+            <p>
+              It may be advice, product and gift recommendations or just your
+              story. <br />
+              Whatever it is, we'd love to hear it.
+            </p>
+          </div>
 
-      <label>
-        Allow Contact:
-        <input
-          type="checkbox"
-          name="contact"
-          checked={form.contact}
-          onChange={handleChange}
-        />
-      </label>
+          <div className="formInputs">
+            <label>
+              About you:
+              <FullWidthInput
+                name="aboutAuth"
+                placeholder="Tell us a little about yourself"
+                value={form.aboutAuth}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Your submission:
+              <textarea
+                class="submissionInput"
+                name="content"
+                value={form.content}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <div className="checkboxRow">
+              <input
+                type="checkbox"
+                name="anonymous"
+                checked={form.anonymous}
+                onChange={handleChange}
+              />
+              <label htmlFor="anonymous">Submit anonymously</label>
+            </div>
 
-      <label>
-        Social Media:
-        <input
-          type="text"
-          name="social"
-          value={form.social}
-          onChange={handleChange}
-        />
-      </label>
+            <div className="checkboxRow">
+              <input
+                type="checkbox"
+                name="contact"
+                checked={form.contact}
+                onChange={handleChange}
+              />
+              <label htmlFor="contact">Allow contact via social media</label>
+            </div>
 
-      <label>
-        Submit Anonymously:
-        <input
-          type="checkbox"
-          name="anonymous"
-          checked={form.anonymous}
-          onChange={handleChange}
-        />
-      </label>
-
-      <button type="submit">Submit</button>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
-    </form>
+            <label>
+              Social Media:
+              <input
+                type="text"
+                name="social"
+                value={form.social}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className="button">
+            <PrimaryButton type="submit">Submit</PrimaryButton>
+          </div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && <p style={{ color: "green" }}>{success}</p>}
+        </form>
+      </div>
+    </>
   );
 };
 

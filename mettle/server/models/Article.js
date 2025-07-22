@@ -5,7 +5,7 @@ const articleSchema = new mongoose.Schema({
   body: { type: String, required: true },
   author: String,
   authorId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  aboutAuth: { type: String, required: true },
+  aboutAuth: { type: String, required: false },
   tags: [String],
   image: String,
   createdAt: { type: Date, default: Date.now },

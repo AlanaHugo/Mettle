@@ -4,10 +4,12 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { loginUser } from "../../services/loginUser.js"; // API service for login
 import { useLoginForm } from "../../hooks/useLoginForm.js"; // Custom hook for input state
 import { useUser } from "../../context/userContext.js"; // Access global user context
-import { FormContainer, SmallerInput } from "../../components/FormComponents.js"; // Reusable styled input components
+import {
+  FullWidthInput
+} from "../../components/FormComponents.js"; // Reusable styled input components
 import { PrimaryButton } from "../../components/Buttons.js"; // Styled button
 
-import "./Login.css"; // Local styles
+import "../../pages/Forms.css"; // Local styles
 
 /**
  * Login Component
@@ -53,59 +55,50 @@ const Login = () => {
   };
 
   return (
-    <div className="formImage">
-      <FormContainer>
-        <form onSubmit={handleSubmit}>
-          <h2 className="formHeader">Login</h2>
+    <div className="formContainer">
+      {/* contains background image and form contents */}
 
-          {/* Optional logout confirmation message */}
-          {logoutMessage && (
-            <div className="logoutMessage">{logoutMessage}</div>
-          )}
-
-          <p className="formBody">
-            Login to your Mettle account to give your recommendations, <br />
+      <form onSubmit={handleSubmit}>
+        <div className="HdrSection">
+          {/*contains heading (h2) and description <p>*/}
+          <h2>Login</h2>
+          <p>
+            Login to your Mettle account to send us your recommendations, <br />
             share your story or manage submissions you've made.
           </p>
-
-          {/* Email and password fields */}
-          <div className="formFields">
-            <SmallerInput
-              name="email"
-              type="text"
-              placeholder="Email or Username"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-            <SmallerInput
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          {/* Submit button */}
-          <div className="formButton">
-            <PrimaryButton type="submit">Login</PrimaryButton>
-          </div>
-
-          {/* Register link */}
-          <p className="formBody">
-            Don't have a Mettle account yet? {" "}
+          <p>
+            Don't have an account?{" "}
             <Link
               to="/register"
               style={{ color: "#502419", textDecoration: "underline" }}
             >
-              Register now
+              Register here.
             </Link>
-            .
           </p>
-        </form>
-      </FormContainer>
+        </div>
+
+        <div className="formInputs">
+          <FullWidthInput
+            name="email"
+            placeholder="Enter your email address"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+
+          <FullWidthInput
+            name="password"
+            type="password"
+            placeholder="Enter your Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="button">
+          <PrimaryButton type="submit">Login</PrimaryButton>
+        </div>
+      </form>
     </div>
   );
 };

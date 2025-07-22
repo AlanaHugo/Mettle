@@ -17,23 +17,33 @@ export const getMyArticles = async (req, res) => {
   }
 };
 
+
 export const updateArticle = async (req, res) => {
-  const userId = req.user.id.toString();
-  const { id } = req.params;
-  const { body } = req.body;
-
   try {
-    const article = await Article.findById(id);
-    if (!article) return res.status(404).json({ message: "Article not found" });
+    const articleId = req.params.id;
+    const updates = req.body; // e.g. { title, body, aboutAuth }
 
-    if (article.authorId.toString() !== userId)
+    const article = await Article.findById(articleId);
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    // Authorization check (example)
+    if (article.authorId.toString() !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized" });
+    }
 
-    article.body = body;
-    await article.save();
+    // Update fields with fallback to existing values if undefined
+    article.title = updates.title ?? article.title;
+    article.body = updates.body ?? article.body;
+    article.aboutAuth = updates.aboutAuth ?? article.aboutAuth;
+    // Update other fields as needed
+
+    await article.save(); // this will run schema validations
+
     res.json(article);
   } catch (err) {
-    console.error(err);
+    console.error("Error updating article:", err);
     res.status(500).json({ message: "Failed to update article" });
   }
 };

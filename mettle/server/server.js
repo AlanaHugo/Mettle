@@ -12,8 +12,7 @@ dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swagger.js';
+import { swaggerUi, swaggerSpec } from './swagger.js';
 
 // Import routes using ES module syntax with .js extension
 import productRoutes from './routes/productRoutes.js';

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate , Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext.js";
 import api from "../../services/api.js";
+import "./myArticles.css"
+import { PrimaryButton , SecondaryButton } from "../../components/Buttons.js"
 
 console.log("✅ MyArticles component mounted");
 
@@ -74,34 +76,40 @@ const MyArticles = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">My Articles</h1>
+    <div className="pageDiv">
+    <div className="mtArticleHdr">
+      <h2>Submission Management</h2>
+      <p>View, edit or delete community submissions you've made here.</p>
+      </div>
+    <div className="articleContainer">
+      
       {articles.map((article) => (
         <div
           key={article._id}
-          className="border rounded-lg p-4 mb-4 shadow-sm bg-white"
+          className="articleDetails"
         >
-          <h2 className="text-xl font-semibold">{article.title}</h2>
+          <h2 className="ArticleTitle">{article.title}</h2>
           {/* Use 'content' since your backend example has that field */}
           <p className="text-gray-700 mt-2">
-            {article.content
-              ? article.content.substring(0, 100)
+            {article.body
+              ? article.body.substring(0, 100)
               : "No content available"}
             ...
           </p>
-          <div className="flex gap-4 mt-4">
+          <div className="ButtonContainer">
             <Link to={`/edit-article/${article._id}`}>
-              <button>Edit</button>
+              <PrimaryButton>Edit</PrimaryButton>
             </Link>
-            <button
+            <SecondaryButton
               onClick={() => handleDelete(article._id)}
               className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
             >
               Delete
-            </button>
+            </SecondaryButton>
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 };

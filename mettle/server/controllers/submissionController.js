@@ -1,13 +1,5 @@
-// controllers/submissionController.js
-// Controller for handling article submissions
-
 import Submission from '../models/Submission.js';
 
-/**
- * Creates a new submission in the database.
- * Requires authentication (user info in req.user).
- * Handles anonymous submissions as well.
- */
 export async function createSubmission(req, res) {
   console.log('createSubmission called with body:', req.body);
   console.log('User from auth middleware:', req.user);
@@ -21,15 +13,17 @@ export async function createSubmission(req, res) {
       anonymous,
     } = req.body;
 
-    let userId = undefined;
-    let email = undefined;
+    // Get userId from authenticated user unless anonymous
+    let userId;
+    let email;
 
     if (!anonymous) {
       if (!req.user || !req.user.id) {
         return res.status(401).json({ message: 'Unauthorized: missing user info' });
       }
       userId = req.user.id;
-      // Optional: fetch email if you want, by querying User model here
+      // optionally set email if available in req.user.email
+      email = req.user.email || undefined;
     }
 
     // Validate required fields

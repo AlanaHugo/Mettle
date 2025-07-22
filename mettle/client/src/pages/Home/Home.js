@@ -74,11 +74,7 @@ const Home = () => {
             comforts, turning a simple gift into a meaningful gesture for
             someone doing it tough.
           </p>
-          <p>
-            Opt in at checkout to send everyday support and thoughtful goods to
-            those who need it most. You can leave a note or donate on someone
-            else's behalf.
-          </p>
+          
         </div>
 
         {/* Background image box (hidden on mobile via CSS) */}

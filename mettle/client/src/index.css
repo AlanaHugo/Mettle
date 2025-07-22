@@ -2,11 +2,11 @@
 
 :root {
   --font-heading: "Montserrat", sans-serif;
-  --font-body: "Merriweather", serif;
+  --font-body: "Montserrat", sans-serif;
 }
 
 body {
-  font-family: var(--font-body);
+  font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff;
@@ -56,4 +56,14 @@ select, option {
 
 input::placeholder {
   font-family: 'Montserrat', sans-serif;
+}
+
+form {
+  background-color:rgba(255, 255, 255, 0.7);
+  width: 90vw;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
+
+
 }

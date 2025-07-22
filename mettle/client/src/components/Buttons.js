@@ -1,31 +1,64 @@
-// src/components/Buttons.js
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+// Buttons.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-// Primary Button
-export const PrimaryButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#C7CB85',
-  color: 'black',
-  width: 200,
+// Shared styles
+const baseStyle = {
+  width: '200px',
   padding: '10px 24px',
   fontFamily: 'Montserrat, sans-serif',
-  fontSize:'0.75em',
+  fontSize: '0.75em',
   textTransform: 'none',
-  '&:hover': {
-    backgroundColor: '#7EA172',
-  },
-}));
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease',
+  display: 'inline-block',
+  textAlign: 'center',
+  textDecoration: 'none',
+};
 
-// Secondary Button
-export const SecondaryButton = styled(Button)(({ theme }) => ({
- backgroundColor: '#EBBE9B',
-  color: 'black',
-  width: 200,
-  padding: '10px 24px',
-  fontFamily: 'Montserrat, sans-serif',
-  fontSize:'0.75em',
-  textTransform: 'none',
-  '&:hover': {
-    backgroundColor: '#E7A977',
-  },
-}));
+const hoverEffect = (hoverColor, defaultColor) => ({
+  onMouseOver: (e) => (e.target.style.backgroundColor = hoverColor),
+  onMouseOut: (e) => (e.target.style.backgroundColor = defaultColor),
+});
+
+// Primary
+export const PrimaryButton = ({ children, to, onClick, type = 'button' }) => {
+  const style = { ...baseStyle, backgroundColor: '#C7CB85', color: 'black' };
+  const hover = hoverEffect('#7EA172', '#C7CB85');
+
+  if (to) {
+    return (
+      <Link to={to} style={style} {...hover}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} onClick={onClick} style={style} {...hover}>
+      {children}
+    </button>
+  );
+};
+
+// Secondary
+export const SecondaryButton = ({ children, to, onClick, type = 'button' }) => {
+  const style = { ...baseStyle, backgroundColor: '#EBBE9B', color: 'black' };
+  const hover = hoverEffect('#E7A977', '#EBBE9B');
+
+  if (to) {
+    return (
+      <Link to={to} style={style} {...hover}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} onClick={onClick} style={style} {...hover}>
+      {children}
+    </button>
+  );
+};

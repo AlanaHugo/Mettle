@@ -1,5 +1,3 @@
-// routes/productRoutes.js
-
 /**
  * Product Routes
  * --------------
@@ -13,8 +11,33 @@ import Product from '../models/Product.js';  // Mongoose model for products
 const router = express.Router();
 
 /**
- * GET /api/products
- * Public route to get all products.
+ * @swagger
+ * tags:
+ *   name: Products
+ *   description: Public product retrieval endpoints
+ */
+
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Get all products
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: List of all products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/', async (req, res) => {
   try {
@@ -27,8 +50,44 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * GET /api/products/:id
- * Public route to get a single product by its ID.
+ * @swagger
+ * /api/products/{id}:
+ *   get:
+ *     summary: Get a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The product ID
+ *         schema:
+ *           type: string
+ *           example: 60e6f9f06d8b0c001f6d8a2f
+ *     responses:
+ *       200:
+ *         description: The product details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Invalid product ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.get('/:id', async (req, res) => {
   const { id } = req.params;

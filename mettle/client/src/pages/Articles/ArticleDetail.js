@@ -63,7 +63,7 @@ const ArticleDetail = () => {
           <p>Share your experience to inspire others and lighten your load. You can also 
             share your thoughts on supplies that helped you or someone you know 
             through their medical journey. You can even share anonymously. </p>
-          <PrimaryButton component={Link} to="/register">Share Your Story</PrimaryButton>
+          <PrimaryButton component={Link} to="/login">Share Your Story</PrimaryButton>
         </div>
       </div>
       

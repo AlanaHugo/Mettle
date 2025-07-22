@@ -1,51 +1,62 @@
 import React, { useState } from "react";
 import { registerUser } from "../../services/registerUser.js";
-import { FormContainer, FullWidthInput } from "../../components/FormComponents.js"; // Using FullWidthInput only now
-import "./Register.css";
+import {
+  FormContainer,
+  FullWidthInput,
+  SmallerInput,
+} from "../../components/FormComponents.js"; // Using FullWidthInput only now
+import "../../pages/Forms.css";
 import { PrimaryButton } from "../../components/Buttons.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await registerUser(form);
-      alert("Registered! Now log in.");
+      alert("Registrations successful - welcome to Mettle");
+      navigate("/login");
     } catch (err) {
       alert(err.response?.data?.message || "Error during registration.");
     }
   };
 
   return (
-    <div className="formImage">
-      <FormContainer className="formContainer">
+    <div className="formContainer">
+      {/* contains background image and form contents */}
+     
         <form onSubmit={handleSubmit}>
-
-          <div className="formHeader">
+          <div className="HdrSection">
+            {/*contains heading (h2) and description <p>*/}
             <h2>Register</h2>
             <p>Register with us to share with our community...</p>
-            <p>Already have an account?{" "}
-              <Link to="/login" style={{ color: "#502419", textDecoration: "underline" }}>
+            <p>
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                style={{ color: "#502419", textDecoration: "underline" }}
+              >
                 Login here.
               </Link>
             </p>
           </div>
 
-          <div className="formFields">
-
-            <FullWidthInput
+          <div className="nameInputs">
+            <SmallerInput
               name="firstName"
               placeholder="First name"
               value={form.firstName}
@@ -53,14 +64,15 @@ const Register = () => {
               required
             />
 
-            <FullWidthInput
+            <SmallerInput
               name="lastName"
               placeholder="Last name"
               value={form.lastName}
               onChange={handleChange}
               required
             />
-
+          </div>
+          <div className="formInputs">
             <FullWidthInput
               name="email"
               placeholder="Enter your email address"
@@ -77,13 +89,12 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-
           </div>
-
+          <div className="button">
             <PrimaryButton type="submit">Register</PrimaryButton>
-
+          </div>
         </form>
-      </FormContainer>
+      
     </div>
   );
 };

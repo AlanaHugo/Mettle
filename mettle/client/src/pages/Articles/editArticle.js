@@ -1,90 +1,119 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { fetchArticleById } from "../../controllers/Articles/fetchArticlesController.js";
-import axios from "axios";
+
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './editArticles.css';
+import { PrimaryButton } from '../../components/Buttons.js';
+
 
 const EditArticle = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Article ID from URL
   const navigate = useNavigate();
 
-  const [article, setArticle] = useState(null);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    body: '',
+    tags: ''
+  });
 
-  // Fetch article data on mount
+  const [error, setError] = useState('');
+
+  // Fetch article data when component mounts
   useEffect(() => {
-    async function loadArticle() {
-      try {
-        const data = await fetchArticleById(id);
-        setArticle(data);
-        setTitle(data.title);
-        setBody(data.body);
-      } catch (err) {
-        setError("Failed to load article.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadArticle();
+    axios
+      .get(`http://localhost:5000/api/articles/${id}`)
+      .then(res => {
+        const { title, body, tags } = res.data;
+        setFormData({
+          title,
+          body,
+          tags: tags.join(', ') // Convert tags array to comma-separated string
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load article:', err);
+        setError('Failed to fetch article. Please try again.');
+      });
   }, [id]);
 
-  const handleSubmit = async (e) => {
+  // Handle input changes
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission to update the article
+  const handleSubmit = async e => {
     e.preventDefault();
-    setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
       await axios.put(
-        `/api/my-articles/${id}`,
-        { title, body },
-        { headers: { Authorization: `Bearer ${token}` } }
+        `http://localhost:5000/api/my-articles/${id}`,
+        {
+          title: formData.title,
+          body: formData.body,
+          tags: formData.tags.split(',').map(tag => tag.trim()) // Convert back to array
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
       );
 
-      navigate("/my-articles"); // Redirect to your articles list page after update
+      navigate('/my-articles'); // Redirect after successful update
     } catch (err) {
-      setError("Failed to update the article.");
-      console.error(err);
+      console.error('Update failed:', err);
+      setError('Update failed. Please check your input or login status.');
     }
   };
 
-  if (loading) return <p>Loading article...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!article) return <p>Article not found.</p>;
-
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Edit Article</h1>
+    <div className="formContainer">
       <form onSubmit={handleSubmit}>
-        <label className="block mb-2">
-          Title:
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="border p-2 w-full"
-          />
-        </label>
-        <label className="block mb-4">
-          Body:
-          <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-            rows={10}
-            className="border p-2 w-full"
-          />
-        </label>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
+        <div className="HdrSection">
+          <h2>Edit Article</h2>
+          <p>Update your existing article below.</p>
+        </div>
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        <div className="formInputs">
+          <label>
+            Title
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Body
+            <textarea
+              name="body"
+              className="submissionInput"
+              value={formData.body}
+              onChange={handleChange}
+              required
+            />
+          </label>
+
+          <label>
+            Tags (comma separated)
+            <input
+              type="text"
+              name="tags"
+              value={formData.tags}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+
+        <PrimaryButton type="submit" className="submitBtn">
           Save Changes
-        </button>
+        </PrimaryButton>
       </form>
     </div>
   );
